@@ -4,7 +4,22 @@ import ReactMarkdown from "react-markdown";
 import { ArrowUp, Cookie, Mic, Phone, PhoneOff, Square } from "lucide-react";
 import { CookieBackground } from "@/components/CookieBackground";
 import { FlavorSettings } from "@/components/FlavorSettings";
+import { ChatHistory, type ChatSummary } from "@/components/ChatHistory";
 import { DEFAULT_FLAVOR, FLAVORS, type FlavorId } from "@/lib/flavors";
+
+type StoredChat = ChatSummary & { messages: Msg[] };
+
+function loadChats(): StoredChat[] {
+  try {
+    return JSON.parse(localStorage.getItem("keks-chats") ?? "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveChats(chats: StoredChat[]) {
+  localStorage.setItem("keks-chats", JSON.stringify(chats.slice(0, 30)));
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -45,6 +60,8 @@ function Index() {
   const [speak, setSpeak] = useState(false);
   const [callMode, setCallMode] = useState(false);
   const [listening, setListening] = useState(false);
+  const [chats, setChats] = useState<StoredChat[]>([]);
+  const [activeChatId, setActiveChatId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
   const callModeRef = useRef(false);
