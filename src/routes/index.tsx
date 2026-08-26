@@ -4,7 +4,22 @@ import ReactMarkdown from "react-markdown";
 import { ArrowUp, Cookie, Mic, Phone, PhoneOff, Square } from "lucide-react";
 import { CookieBackground } from "@/components/CookieBackground";
 import { FlavorSettings } from "@/components/FlavorSettings";
+import { ChatHistory, type ChatSummary } from "@/components/ChatHistory";
 import { DEFAULT_FLAVOR, FLAVORS, type FlavorId } from "@/lib/flavors";
+
+type StoredChat = ChatSummary & { messages: Msg[] };
+
+function loadChats(): StoredChat[] {
+  try {
+    return JSON.parse(localStorage.getItem("keks-chats") ?? "[]");
+  } catch {
+    return [];
+  }
+}
+
+function saveChats(chats: StoredChat[]) {
+  localStorage.setItem("keks-chats", JSON.stringify(chats.slice(0, 30)));
+}
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -45,6 +60,8 @@ function Index() {
   const [speak, setSpeak] = useState(false);
   const [callMode, setCallMode] = useState(false);
   const [listening, setListening] = useState(false);
+  const [chats, setChats] = useState<StoredChat[]>([]);
+  const [activeChatId, setActiveChatId] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const recognitionRef = useRef<any>(null);
   const callModeRef = useRef(false);
@@ -55,7 +72,51 @@ function Index() {
     const saved = localStorage.getItem("keks-flavor") as FlavorId | null;
     if (saved) setFlavor(saved);
     setSpeak(localStorage.getItem("keks-speak") === "1");
+    setChats(loadChats());
   }, []);
+
+  useEffect(() => {
+    if (messages.length === 0 || loading) return;
+    setChats((prev) => {
+      const firstUser = messages.find((m) => m.role === "user");
+      const title = firstUser ? firstUser.content.slice(0, 40) : "Neuer Chat";
+      const id = activeChatId ?? crypto.randomUUID();
+      if (!activeChatId) setActiveChatId(id);
+      const next: StoredChat[] = [
+        { id, title, updatedAt: Date.now(), messages },
+        ...prev.filter((c) => c.id !== id),
+      ];
+      saveChats(next);
+      return next;
+    });
+  }, [messages, loading, activeChatId]);
+
+  function newChat() {
+    recognitionRef.current?.stop();
+    window.speechSynthesis?.cancel();
+    setCallMode(false);
+    callModeRef.current = false;
+    setListening(false);
+    setMessages([]);
+    setActiveChatId(null);
+    setError(null);
+    setInput("");
+  }
+
+  function openChat(id: string) {
+    const chat = chats.find((c) => c.id === id);
+    if (!chat) return;
+    setMessages(chat.messages);
+    setActiveChatId(id);
+    setError(null);
+  }
+
+  function deleteChat(id: string) {
+    const next = chats.filter((c) => c.id !== id);
+    saveChats(next);
+    setChats(next);
+    if (activeChatId === id) newChat();
+  }
 
   useEffect(() => {
     document.documentElement.setAttribute("data-flavor", flavor);
@@ -170,12 +231,21 @@ function Index() {
               </p>
             </div>
           </div>
-          <FlavorSettings
-            flavor={flavor}
-            onChange={setFlavor}
-            voice={speak}
-            onVoiceChange={setSpeak}
-          />
+          <div className="flex items-center gap-2">
+            <ChatHistory
+              chats={chats}
+              activeId={activeChatId}
+              onOpen={openChat}
+              onDelete={deleteChat}
+              onNew={newChat}
+            />
+            <FlavorSettings
+              flavor={flavor}
+              onChange={setFlavor}
+              voice={speak}
+              onVoiceChange={setSpeak}
+            />
+          </div>
         </div>
       </header>
 
