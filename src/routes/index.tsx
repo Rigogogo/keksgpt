@@ -132,6 +132,10 @@ function Index() {
   }, [lang]);
 
   useEffect(() => {
+    localStorage.setItem("keks-speak", speak ? "1" : "0");
+  }, [speak]);
+
+  useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
   }, [messages, loading]);
 
@@ -139,7 +143,7 @@ function Index() {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text.replace(/[*#`_>]/g, ""));
-    u.lang = "de-DE";
+    u.lang = lang;
     u.onend = () => {
       if (callModeRef.current) startListening();
     };
@@ -159,7 +163,11 @@ function Index() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next, flavor: activeFlavor.name }),
+        body: JSON.stringify({
+          messages: next,
+          flavor: activeFlavor.name,
+          language: langName(lang),
+        }),
       });
       if (!res.ok || !res.body) {
         throw new Error(await res.text());
@@ -192,7 +200,7 @@ function Index() {
       return;
     }
     const rec = new SR();
-    rec.lang = "de-DE";
+    rec.lang = lang;
     rec.interimResults = false;
     rec.onresult = (e: any) => {
       const t = e.results[0][0].transcript;
@@ -248,6 +256,8 @@ function Index() {
               onChange={setFlavor}
               voice={speak}
               onVoiceChange={setSpeak}
+              lang={lang}
+              onLangChange={setLang}
             />
           </div>
         </div>

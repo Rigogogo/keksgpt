@@ -9,8 +9,13 @@ export const Route = createFileRoute("/api/chat")({
         const key = process.env["LOVABLE_API_KEY"];
         if (!key) return new Response("Missing AI key", { status: 500 });
 
-        const body = (await request.json()) as { messages: Msg[]; flavor?: string };
+        const body = (await request.json()) as {
+          messages: Msg[];
+          flavor?: string;
+          language?: string;
+        };
         const flavor = body.flavor ?? "Schoko";
+        const language = body.language ?? "Deutsch";
 
         const res = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
           method: "POST",
@@ -24,7 +29,7 @@ export const Route = createFileRoute("/api/chat")({
             messages: [
               {
                 role: "system",
-                content: `Du bist Keks GPT, ein hilfsbereiter, warmherziger KI-Assistent mit Keks-Persönlichkeit. Aktuelle Kekssorte: ${flavor}. Antworte auf Deutsch (oder in der Sprache des Nutzers), klar und hilfreich. Streue gelegentlich – sparsam – einen kleinen Keks-Witz oder eine Keks-Metapher ein, aber gehe immer zuerst ernsthaft auf die Frage ein. Nutze Markdown.`,
+                content: `Du bist Keks GPT, ein hilfsbereiter, warmherziger KI-Assistent mit Keks-Persönlichkeit. Aktuelle Kekssorte: ${flavor}. Antworte grundsätzlich auf ${language} (oder in der Sprache des Nutzers, falls er eine andere schreibt), klar und hilfreich. Streue gelegentlich – sparsam – einen kleinen Keks-Witz oder eine Keks-Metapher ein, aber gehe immer zuerst ernsthaft auf die Frage ein. Nutze Markdown.`,
               },
               ...body.messages,
             ],
