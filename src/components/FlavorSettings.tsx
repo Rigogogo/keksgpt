@@ -1,17 +1,22 @@
 import { Settings } from "lucide-react";
 import { useState } from "react";
 import { FLAVORS, type FlavorId } from "@/lib/flavors";
+import { LANGUAGES, type LangId } from "@/lib/languages";
 
 export function FlavorSettings({
   flavor,
   onChange,
   voice,
   onVoiceChange,
+  lang,
+  onLangChange,
 }: {
   flavor: FlavorId;
   onChange: (f: FlavorId) => void;
   voice: boolean;
   onVoiceChange: (v: boolean) => void;
+  lang: LangId;
+  onLangChange: (l: LangId) => void;
 }) {
   const [open, setOpen] = useState(false);
 
@@ -28,7 +33,7 @@ export function FlavorSettings({
       {open && (
         <>
           <div className="fixed inset-0 z-10" onClick={() => setOpen(false)} />
-          <div className="absolute right-0 z-20 mt-3 w-72 rounded-3xl border border-border bg-popover p-4 text-popover-foreground crumb-shadow">
+          <div className="absolute right-0 z-20 mt-3 max-h-[70vh] w-72 overflow-y-auto rounded-3xl border border-border bg-popover p-4 text-popover-foreground crumb-shadow">
             <h2 className="font-display text-lg font-extrabold">Kekssorte</h2>
             <p className="mb-3 text-xs text-muted-foreground">
               Wählt Farben & Kekse im Hintergrund.
@@ -49,6 +54,28 @@ export function FlavorSettings({
                 </button>
               ))}
             </div>
+
+            <h2 className="mt-5 font-display text-lg font-extrabold">Land & Sprache</h2>
+            <p className="mb-3 text-xs text-muted-foreground">
+              In welcher Sprache Keks GPT spricht, versteht und antwortet.
+            </p>
+            <div className="grid grid-cols-2 gap-2">
+              {LANGUAGES.map((l) => (
+                <button
+                  key={l.id}
+                  onClick={() => onLangChange(l.id)}
+                  className={`rounded-2xl border px-3 py-2 text-left text-sm transition ${
+                    lang === l.id
+                      ? "border-primary bg-accent font-bold text-accent-foreground"
+                      : "border-border bg-card hover:bg-secondary"
+                  }`}
+                >
+                  <span className="mr-1">{l.flag}</span>
+                  {l.name}
+                </button>
+              ))}
+            </div>
+
             <label className="mt-4 flex cursor-pointer items-center justify-between rounded-2xl border border-border bg-card px-3 py-2 text-sm">
               <span>Antworten vorlesen</span>
               <input

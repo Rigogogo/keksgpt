@@ -6,6 +6,7 @@ import { CookieBackground } from "@/components/CookieBackground";
 import { FlavorSettings } from "@/components/FlavorSettings";
 import { ChatHistory, type ChatSummary } from "@/components/ChatHistory";
 import { DEFAULT_FLAVOR, FLAVORS, type FlavorId } from "@/lib/flavors";
+import { DEFAULT_LANG, langName, type LangId } from "@/lib/languages";
 
 type StoredChat = ChatSummary & { messages: Msg[] };
 
@@ -53,6 +54,7 @@ const SUGGESTIONS = [
 
 function Index() {
   const [flavor, setFlavor] = useState<FlavorId>(DEFAULT_FLAVOR);
+  const [lang, setLang] = useState<LangId>(DEFAULT_LANG);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -72,6 +74,8 @@ function Index() {
     const saved = localStorage.getItem("keks-flavor") as FlavorId | null;
     if (saved) setFlavor(saved);
     setSpeak(localStorage.getItem("keks-speak") === "1");
+    const savedLang = localStorage.getItem("keks-lang") as LangId | null;
+    if (savedLang) setLang(savedLang);
     setChats(loadChats());
   }, []);
 
@@ -124,6 +128,10 @@ function Index() {
   }, [flavor]);
 
   useEffect(() => {
+    localStorage.setItem("keks-lang", lang);
+  }, [lang]);
+
+  useEffect(() => {
     localStorage.setItem("keks-speak", speak ? "1" : "0");
   }, [speak]);
 
@@ -135,7 +143,7 @@ function Index() {
     if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(text.replace(/[*#`_>]/g, ""));
-    u.lang = "de-DE";
+    u.lang = lang;
     u.onend = () => {
       if (callModeRef.current) startListening();
     };
@@ -155,7 +163,11 @@ function Index() {
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: next, flavor: activeFlavor.name }),
+        body: JSON.stringify({
+          messages: next,
+          flavor: activeFlavor.name,
+          language: langName(lang),
+        }),
       });
       if (!res.ok || !res.body) {
         throw new Error(await res.text());
@@ -188,7 +200,7 @@ function Index() {
       return;
     }
     const rec = new SR();
-    rec.lang = "de-DE";
+    rec.lang = lang;
     rec.interimResults = false;
     rec.onresult = (e: any) => {
       const t = e.results[0][0].transcript;
@@ -244,6 +256,8 @@ function Index() {
               onChange={setFlavor}
               voice={speak}
               onVoiceChange={setSpeak}
+              lang={lang}
+              onLangChange={setLang}
             />
           </div>
         </div>
