@@ -187,6 +187,98 @@
   --shadow-tint: oklch(0.62 0.11 85 / 0.26);
 }
 
+[data-flavor="salzkaramell"] {
+  --background: oklch(0.96 0.035 75);
+  --foreground: oklch(0.31 0.06 65);
+  --card: oklch(0.99 0.015 78);
+  --card-foreground: oklch(0.31 0.06 65);
+  --popover: oklch(0.99 0.015 78);
+  --popover-foreground: oklch(0.31 0.06 65);
+  --primary: oklch(0.6 0.13 68);
+  --primary-foreground: oklch(0.98 0.015 78);
+  --secondary: oklch(0.92 0.055 75);
+  --secondary-foreground: oklch(0.35 0.07 65);
+  --muted: oklch(0.93 0.04 76);
+  --muted-foreground: oklch(0.53 0.055 68);
+  --accent: oklch(0.85 0.1 72);
+  --accent-foreground: oklch(0.33 0.07 65);
+  --border: oklch(0.87 0.055 74);
+  --input: oklch(0.87 0.055 74);
+  --ring: oklch(0.64 0.12 70);
+  --crumb: oklch(0.54 0.12 68);
+  --dough: oklch(0.84 0.1 74);
+  --shadow-tint: oklch(0.6 0.13 68 / 0.3);
+}
+
+[data-flavor="minze"] {
+  --background: oklch(0.965 0.03 175);
+  --foreground: oklch(0.3 0.06 180);
+  --card: oklch(0.985 0.018 178);
+  --card-foreground: oklch(0.3 0.06 180);
+  --popover: oklch(0.985 0.018 178);
+  --popover-foreground: oklch(0.3 0.06 180);
+  --primary: oklch(0.55 0.11 172);
+  --primary-foreground: oklch(0.98 0.015 178);
+  --secondary: oklch(0.92 0.045 176);
+  --secondary-foreground: oklch(0.33 0.07 180);
+  --muted: oklch(0.93 0.035 177);
+  --muted-foreground: oklch(0.52 0.055 180);
+  --accent: oklch(0.85 0.09 172);
+  --accent-foreground: oklch(0.3 0.07 180);
+  --border: oklch(0.87 0.045 176);
+  --input: oklch(0.87 0.045 176);
+  --ring: oklch(0.6 0.1 174);
+  --crumb: oklch(0.52 0.11 172);
+  --dough: oklch(0.83 0.1 174);
+  --shadow-tint: oklch(0.55 0.11 172 / 0.3);
+}
+
+[data-flavor="kokos"] {
+  --background: oklch(0.975 0.015 250);
+  --foreground: oklch(0.32 0.03 250);
+  --card: oklch(0.995 0.008 250);
+  --card-foreground: oklch(0.32 0.03 250);
+  --popover: oklch(0.995 0.008 250);
+  --popover-foreground: oklch(0.32 0.03 250);
+  --primary: oklch(0.58 0.05 250);
+  --primary-foreground: oklch(0.99 0.008 250);
+  --secondary: oklch(0.94 0.02 250);
+  --secondary-foreground: oklch(0.36 0.035 250);
+  --muted: oklch(0.95 0.015 250);
+  --muted-foreground: oklch(0.54 0.03 250);
+  --accent: oklch(0.9 0.025 252);
+  --accent-foreground: oklch(0.34 0.035 250);
+  --border: oklch(0.9 0.02 250);
+  --input: oklch(0.9 0.02 250);
+  --ring: oklch(0.65 0.045 250);
+  --crumb: oklch(0.58 0.04 250);
+  --dough: oklch(0.9 0.02 252);
+  --shadow-tint: oklch(0.58 0.05 250 / 0.24);
+}
+
+[data-flavor="honig"] {
+  --background: oklch(0.965 0.045 85);
+  --foreground: oklch(0.32 0.06 70);
+  --card: oklch(0.99 0.02 88);
+  --card-foreground: oklch(0.32 0.06 70);
+  --popover: oklch(0.99 0.02 88);
+  --popover-foreground: oklch(0.32 0.06 70);
+  --primary: oklch(0.66 0.13 80);
+  --primary-foreground: oklch(0.98 0.02 88);
+  --secondary: oklch(0.92 0.06 85);
+  --secondary-foreground: oklch(0.36 0.07 72);
+  --muted: oklch(0.93 0.045 86);
+  --muted-foreground: oklch(0.53 0.055 75);
+  --accent: oklch(0.86 0.11 82);
+  --accent-foreground: oklch(0.34 0.07 72);
+  --border: oklch(0.88 0.055 85);
+  --input: oklch(0.88 0.055 85);
+  --ring: oklch(0.7 0.12 80);
+  --crumb: oklch(0.6 0.12 76);
+  --dough: oklch(0.86 0.11 84);
+  --shadow-tint: oklch(0.66 0.13 80 / 0.26);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
