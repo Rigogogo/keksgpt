@@ -6,6 +6,7 @@ import { CookieBackground } from "@/components/CookieBackground";
 import { FlavorSettings } from "@/components/FlavorSettings";
 import { ChatHistory, type ChatSummary } from "@/components/ChatHistory";
 import { DEFAULT_FLAVOR, FLAVORS, type FlavorId } from "@/lib/flavors";
+import { DEFAULT_LANG, langName, type LangId } from "@/lib/languages";
 
 type StoredChat = ChatSummary & { messages: Msg[] };
 
@@ -53,6 +54,7 @@ const SUGGESTIONS = [
 
 function Index() {
   const [flavor, setFlavor] = useState<FlavorId>(DEFAULT_FLAVOR);
+  const [lang, setLang] = useState<LangId>(DEFAULT_LANG);
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -72,6 +74,8 @@ function Index() {
     const saved = localStorage.getItem("keks-flavor") as FlavorId | null;
     if (saved) setFlavor(saved);
     setSpeak(localStorage.getItem("keks-speak") === "1");
+    const savedLang = localStorage.getItem("keks-lang") as LangId | null;
+    if (savedLang) setLang(savedLang);
     setChats(loadChats());
   }, []);
 
@@ -124,8 +128,8 @@ function Index() {
   }, [flavor]);
 
   useEffect(() => {
-    localStorage.setItem("keks-speak", speak ? "1" : "0");
-  }, [speak]);
+    localStorage.setItem("keks-lang", lang);
+  }, [lang]);
 
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight, behavior: "smooth" });
