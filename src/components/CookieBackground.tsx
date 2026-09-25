@@ -16,11 +16,11 @@ function Cookie({ size }: { size: number }) {
     <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true">
       <circle cx="20" cy="20" r="18" fill="var(--dough)" />
       <circle cx="20" cy="20" r="18" fill="none" stroke="var(--crumb)" strokeOpacity="0.35" />
-      <circle cx="14" cy="14" r="3" fill="var(--crumb)" />
-      <circle cx="26" cy="17" r="2.4" fill="var(--crumb)" />
-      <circle cx="19" cy="26" r="2.8" fill="var(--crumb)" />
-      <circle cx="28" cy="27" r="1.8" fill="var(--crumb)" />
-      <circle cx="10" cy="24" r="1.6" fill="var(--crumb)" />
+      <circle cx="14" cy="14" r="3" fill="var(--cookie-dot-a, var(--crumb))" />
+      <circle cx="26" cy="17" r="2.4" fill="var(--cookie-dot-b, var(--crumb))" />
+      <circle cx="19" cy="26" r="2.8" fill="var(--cookie-dot-a, var(--crumb))" />
+      <circle cx="28" cy="27" r="1.8" fill="var(--cookie-dot-b, var(--crumb))" />
+      <circle cx="10" cy="24" r="1.6" fill="var(--cookie-dot-a, var(--crumb))" />
     </svg>
   );
 }
