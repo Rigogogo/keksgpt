@@ -1,6 +1,6 @@
 import { Settings } from "lucide-react";
-import { useState } from "react";
-import { FLAVORS, type FlavorId } from "@/lib/flavors";
+import { useEffect, useState } from "react";
+import { FLAVORS, SECRET_FLAVORS, type FlavorId } from "@/lib/flavors";
 import { LANGUAGES, type LangId } from "@/lib/languages";
 
 export function FlavorSettings({
@@ -19,6 +19,32 @@ export function FlavorSettings({
   onLangChange: (l: LangId) => void;
 }) {
   const [open, setOpen] = useState(false);
+  const [code, setCode] = useState("");
+  const [msg, setMsg] = useState<string | null>(null);
+  const [unlocked, setUnlocked] = useState<FlavorId[]>([]);
+
+  useEffect(() => {
+    try {
+      setUnlocked(JSON.parse(localStorage.getItem("keks-unlocked") ?? "[]"));
+    } catch {}
+  }, []);
+
+  function redeem() {
+    const c = code.trim().toLowerCase().replace(/\s/g, "");
+    const found = SECRET_FLAVORS.filter((f) => f.code.includes(c));
+    if (!found.length) {
+      setMsg("Ungültiger Code 🍪");
+      return;
+    }
+    const next = Array.from(new Set([...unlocked, ...found.map((f) => f.id)]));
+    setUnlocked(next);
+    localStorage.setItem("keks-unlocked", JSON.stringify(next));
+    onChange(found[0]!.id);
+    setMsg(`Freigeschaltet: ${found.map((f) => f.name).join(" & ")} 🎉`);
+    setCode("");
+  }
+
+  const secret = SECRET_FLAVORS.filter((f) => unlocked.includes(f.id));
 
   return (
     <div className="relative">
@@ -54,6 +80,51 @@ export function FlavorSettings({
                 </button>
               ))}
             </div>
+
+            {secret.length > 0 && (
+              <>
+                <h2 className="mt-5 font-display text-lg font-extrabold">Geheime Designs</h2>
+                <div className="mt-2 grid grid-cols-2 gap-2">
+                  {secret.map((f) => (
+                    <button
+                      key={f.id}
+                      onClick={() => onChange(f.id)}
+                      className={`rounded-2xl border px-3 py-2 text-left text-sm transition ${
+                        flavor === f.id
+                          ? "border-primary bg-accent font-bold text-accent-foreground"
+                          : "border-border bg-card hover:bg-secondary"
+                      }`}
+                    >
+                      <span className="mr-1">{f.emoji}</span>
+                      {f.name}
+                    </button>
+                  ))}
+                </div>
+              </>
+            )}
+
+            <h2 className="mt-5 font-display text-lg font-extrabold">Code eingeben</h2>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                redeem();
+              }}
+              className="mt-2 flex gap-2"
+            >
+              <input
+                value={code}
+                onChange={(e) => setCode(e.target.value)}
+                placeholder="Geheimcode …"
+                className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-3 py-2 text-sm outline-none focus:border-primary"
+              />
+              <button
+                type="submit"
+                className="rounded-2xl bg-primary px-3 py-2 text-sm font-bold text-primary-foreground"
+              >
+                OK
+              </button>
+            </form>
+            {msg && <p className="mt-2 text-xs text-muted-foreground">{msg}</p>}
 
             <h2 className="mt-5 font-display text-lg font-extrabold">Land & Sprache</h2>
             <p className="mb-3 text-xs text-muted-foreground">

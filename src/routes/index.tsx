@@ -5,7 +5,7 @@ import { ArrowUp, Cookie, Mic, Phone, PhoneOff, Square } from "lucide-react";
 import { CookieBackground } from "@/components/CookieBackground";
 import { FlavorSettings } from "@/components/FlavorSettings";
 import { ChatHistory, type ChatSummary } from "@/components/ChatHistory";
-import { DEFAULT_FLAVOR, FLAVORS, type FlavorId } from "@/lib/flavors";
+import { ALL_FLAVORS, DEFAULT_FLAVOR, type FlavorId } from "@/lib/flavors";
 import { DEFAULT_LANG, langName, type LangId } from "@/lib/languages";
 
 type StoredChat = ChatSummary & { messages: Msg[] };
@@ -68,7 +68,7 @@ function Index() {
   const recognitionRef = useRef<any>(null);
   const callModeRef = useRef(false);
 
-  const activeFlavor = FLAVORS.find((f) => f.id === flavor)!;
+  const activeFlavor = (ALL_FLAVORS.find((f) => f.id === flavor) ?? ALL_FLAVORS[0]!);
 
   useEffect(() => {
     const saved = localStorage.getItem("keks-flavor") as FlavorId | null;
