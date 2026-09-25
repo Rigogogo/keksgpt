@@ -12,7 +12,15 @@ const COOKIES = Array.from({ length: 18 }, (_, i) => {
 });
 
 const SHAPES = ["round", "star", "square", "heart", "ring", "bone"] as const;
-export type CookieShape = (typeof SHAPES)[number];
+const SECRET_SHAPES = ["submarine", "bottle", "orange"] as const;
+export type CookieShape = (typeof SHAPES)[number] | (typeof SECRET_SHAPES)[number];
+
+// Welche Formen im Hintergrund schweben – Geheim-Designs bekommen eigene Motive
+const FLAVOR_SHAPES: Record<string, readonly CookieShape[]> = {
+  uboot: ["submarine"],
+  fanta: ["bottle", "orange"],
+  fantaexotik: ["orange", "bottle"],
+};
 
 function Star({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   // 5-point star path
@@ -43,6 +51,50 @@ function Bone({ cx, cy, r }: { cx: number; cy: number; r: number }) {
       <circle cx={cx - r * 0.62} cy={cy + r * 0.3} r={r * 0.3} />
       <circle cx={cx + r * 0.62} cy={cy - r * 0.3} r={r * 0.3} />
       <circle cx={cx + r * 0.62} cy={cy + r * 0.3} r={r * 0.3} />
+    </g>
+  );
+}
+
+function Submarine({ cx, cy, r }: { cx: number; cy: number; r: number }) {
+  // kleines U-Boot: Rumpf, Turm, Periskop, Heckflosse, Bullaugen
+  return (
+    <g>
+      <ellipse cx={cx} cy={cy + 2} rx={r} ry={r * 0.45} fill="var(--dough)" />
+      <rect x={cx - r * 0.25} y={cy - r * 0.55} width={r * 0.5} height={r * 0.55} rx={r * 0.12} fill="var(--dough)" />
+      <rect x={cx - r * 0.06} y={cy - r * 0.95} width={r * 0.12} height={r * 0.45} fill="var(--dough)" />
+      <rect x={cx - r * 0.06} y={cy - r * 0.95} width={r * 0.4} height={r * 0.14} rx={r * 0.07} fill="var(--dough)" />
+      <polygon
+        points={`${cx + r},${cy + 2} ${cx + r * 1.35},${cy - r * 0.25} ${cx + r * 1.35},${cy + 2 + r * 0.25}`}
+        fill="var(--dough)"
+      />
+      <circle cx={cx - r * 0.45} cy={cy + 2} r={r * 0.14} fill="var(--cookie-dot-a, var(--crumb))" />
+      <circle cx={cx - r * 0.05} cy={cy + 2} r={r * 0.14} fill="var(--cookie-dot-a, var(--crumb))" />
+      <circle cx={cx + r * 0.35} cy={cy + 2} r={r * 0.14} fill="var(--cookie-dot-a, var(--crumb))" />
+    </g>
+  );
+}
+
+function Bottle({ cx, cy, r }: { cx: number; cy: number; r: number }) {
+  // kleine Flasche mit Verschluss und Label
+  return (
+    <g>
+      <rect x={cx - r * 0.14} y={cy - r} width={r * 0.28} height={r * 0.22} rx={r * 0.05} fill="var(--dough)" />
+      <path
+        d={`M ${cx - r * 0.16} ${cy - r * 0.78} L ${cx - r * 0.38} ${cy - r * 0.3} L ${cx - r * 0.38} ${cy + r * 0.85} Q ${cx - r * 0.38} ${cy + r} ${cx - r * 0.2} ${cy + r} L ${cx + r * 0.2} ${cy + r} Q ${cx + r * 0.38} ${cy + r} ${cx + r * 0.38} ${cy + r * 0.85} L ${cx + r * 0.38} ${cy - r * 0.3} L ${cx + r * 0.16} ${cy - r * 0.78} Z`}
+        fill="var(--dough)"
+      />
+      <rect x={cx - r * 0.38} y={cy - r * 0.05} width={r * 0.76} height={r * 0.45} fill="var(--cookie-dot-a, var(--crumb))" />
+    </g>
+  );
+}
+
+function Orange({ cx, cy, r }: { cx: number; cy: number; r: number }) {
+  // Orange mit Blatt und Stiel
+  return (
+    <g>
+      <circle cx={cx} cy={cy + r * 0.15} r={r * 0.8} fill="var(--dough)" />
+      <rect x={cx - r * 0.06} y={cy - r * 0.95} width={r * 0.12} height={r * 0.35} rx={r * 0.06} fill="var(--cookie-dot-b, var(--crumb))" />
+      <ellipse cx={cx + r * 0.35} cy={cy - r * 0.75} rx={r * 0.35} ry={r * 0.18} transform={`rotate(-25 ${cx + r * 0.35} ${cy - r * 0.75})`} fill="var(--cookie-dot-b, var(--crumb))" />
     </g>
   );
 }
@@ -79,6 +131,12 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
         );
       case "bone":
         return <g fill="var(--dough)"><Bone cx={cx} cy={cy} r={16} /></g>;
+      case "submarine":
+        return <Submarine cx={cx} cy={cy} r={14} />;
+      case "bottle":
+        return <Bottle cx={cx} cy={cy} r={14} />;
+      case "orange":
+        return <Orange cx={cx} cy={cy} r={16} />;
       default:
         return <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />;
     }
@@ -92,24 +150,28 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
     [10, 24, 1.6],
   ];
 
+  const isSecret = (SECRET_SHAPES as readonly string[]).includes(s);
+
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true">
       {body}
       {outline}
-      {dots.map(([x, y, r], i) => (
-        <circle key={i} cx={x} cy={y} r={r} fill={i % 2 === 0 ? "var(--cookie-dot-a, var(--crumb))" : "var(--cookie-dot-b, var(--crumb))"} />
-      ))}
+      {!isSecret &&
+        dots.map(([x, y, r], i) => (
+          <circle key={i} cx={x} cy={y} r={r} fill={i % 2 === 0 ? "var(--cookie-dot-a, var(--crumb))" : "var(--cookie-dot-b, var(--crumb))"} />
+        ))}
     </svg>
   );
 }
 
 export { SHAPES };
 
-export function pickShape(i: number): CookieShape {
-  return SHAPES[(i * 7 + 3) % SHAPES.length] ?? "round";
+export function pickShape(i: number, flavor?: string): CookieShape {
+  const set = (flavor && FLAVOR_SHAPES[flavor]) || SHAPES;
+  return set[(i * 7 + 3) % set.length] ?? "round";
 }
 
-export function CookieBackground() {
+export function CookieBackground({ flavor }: { flavor?: string }) {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
       {COOKIES.map((c, i) => (
@@ -128,7 +190,7 @@ export function CookieBackground() {
             } as React.CSSProperties
           }
         >
-          <Cookie size={c.size} shape={pickShape(i)} />
+          <Cookie size={c.size} shape={pickShape(i, flavor)} />
         </span>
       ))}
     </div>
