@@ -161,6 +161,8 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
         return <Bottle cx={cx} cy={cy} r={14} />;
       case "orange":
         return <Orange cx={cx} cy={cy} r={16} />;
+      case "can":
+        return <Can cx={cx} cy={cy} r={14} />;
       default:
         return <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />;
     }
