@@ -166,11 +166,12 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
 
 export { SHAPES };
 
-export function pickShape(i: number): CookieShape {
-  return SHAPES[(i * 7 + 3) % SHAPES.length] ?? "round";
+export function pickShape(i: number, flavor?: string): CookieShape {
+  const set = (flavor && FLAVOR_SHAPES[flavor]) || SHAPES;
+  return set[(i * 7 + 3) % set.length] ?? "round";
 }
 
-export function CookieBackground() {
+export function CookieBackground({ flavor }: { flavor?: string }) {
   return (
     <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
       {COOKIES.map((c, i) => (
@@ -189,7 +190,7 @@ export function CookieBackground() {
             } as React.CSSProperties
           }
         >
-          <Cookie size={c.size} shape={pickShape(i)} />
+          <Cookie size={c.size} shape={pickShape(i, flavor)} />
         </span>
       ))}
     </div>
