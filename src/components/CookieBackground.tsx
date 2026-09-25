@@ -95,3 +95,29 @@ export { SHAPES };
 export function pickShape(i: number): CookieShape {
   return SHAPES[(i * 7 + 3) % SHAPES.length];
 }
+
+export function CookieBackground() {
+  return (
+    <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      {COOKIES.map((c, i) => (
+        <span
+          key={i}
+          className="cookie-float absolute"
+          style={
+            {
+              left: `${c.left}%`,
+              top: `${c.top}%`,
+              opacity: c.opacity,
+              animationDelay: `${c.delay}s`,
+              "--dur": `${c.dur}s`,
+              "--spin-from": `${c.from}deg`,
+              "--spin-to": `${c.from + 22}deg`,
+            } as React.CSSProperties
+          }
+        >
+          <Cookie size={c.size} shape={pickShape(i)} />
+        </span>
+      ))}
+    </div>
+  );
+}
