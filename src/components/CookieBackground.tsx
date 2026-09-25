@@ -47,8 +47,8 @@ function Bone({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   );
 }
 
-export function Cookie({ size, shape }: { size: number; shape?: CookieShape }) {
-  const s = shape ?? "round";
+export function Cookie({ size, shape = "round" }: { size: number; shape?: CookieShape }) {
+  const s = shape;
   const cx = 20;
   const cy = 20;
 
