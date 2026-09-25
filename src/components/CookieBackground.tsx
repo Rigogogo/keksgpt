@@ -106,7 +106,7 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
 export { SHAPES };
 
 export function pickShape(i: number): CookieShape {
-  return SHAPES[(i * 7 + 3) % SHAPES.length];
+  return SHAPES[(i * 7 + 3) % SHAPES.length] ?? "round";
 }
 
 export function CookieBackground() {
