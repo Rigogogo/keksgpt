@@ -8,7 +8,10 @@ export type FlavorId =
   | "salzkaramell"
   | "minze"
   | "kokos"
-  | "honig";
+  | "honig"
+  | "fanta"
+  | "fantaexotik"
+  | "uboot";
 
 export type Flavor = {
   id: FlavorId;
@@ -29,5 +32,13 @@ export const FLAVORS: Flavor[] = [
   { id: "kokos", name: "Kokos", emoji: "🥥", tagline: "Exotisch, weiß, wolkenweich" },
   { id: "honig", name: "Honig", emoji: "🍯", tagline: "Goldig, süß, sonnig" },
 ];
+
+export const SECRET_FLAVORS: (Flavor & { code: string[] })[] = [
+  { id: "fanta", name: "Fanta", emoji: "🍊", tagline: "Spritzig orange", code: ["fanta"] },
+  { id: "fantaexotik", name: "Fanta Exotik", emoji: "🥭", tagline: "Tropisch, gelb-pink", code: ["fanta"] },
+  { id: "uboot", name: "U-Boot", emoji: "🌊", tagline: "Tief unter Wasser", code: ["uboot", "ubot", "u-boot"] },
+];
+
+export const ALL_FLAVORS: Flavor[] = [...FLAVORS, ...SECRET_FLAVORS];
 
 export const DEFAULT_FLAVOR: FlavorId = "schoko";
