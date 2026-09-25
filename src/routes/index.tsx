@@ -129,6 +129,7 @@ function Index() {
 
   useEffect(() => {
     localStorage.setItem("keks-lang", lang);
+    document.documentElement.setAttribute("data-language", lang);
   }, [lang]);
 
   useEffect(() => {
