@@ -131,6 +131,12 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
         );
       case "bone":
         return <g fill="var(--dough)"><Bone cx={cx} cy={cy} r={16} /></g>;
+      case "submarine":
+        return <Submarine cx={cx} cy={cy} r={14} />;
+      case "bottle":
+        return <Bottle cx={cx} cy={cy} r={14} />;
+      case "orange":
+        return <Orange cx={cx} cy={cy} r={16} />;
       default:
         return <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />;
     }
@@ -144,13 +150,16 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
     [10, 24, 1.6],
   ];
 
+  const isSecret = (SECRET_SHAPES as readonly string[]).includes(s);
+
   return (
     <svg width={size} height={size} viewBox="0 0 40 40" aria-hidden="true">
       {body}
       {outline}
-      {dots.map(([x, y, r], i) => (
-        <circle key={i} cx={x} cy={y} r={r} fill={i % 2 === 0 ? "var(--cookie-dot-a, var(--crumb))" : "var(--cookie-dot-b, var(--crumb))"} />
-      ))}
+      {!isSecret &&
+        dots.map(([x, y, r], i) => (
+          <circle key={i} cx={x} cy={y} r={r} fill={i % 2 === 0 ? "var(--cookie-dot-a, var(--crumb))" : "var(--cookie-dot-b, var(--crumb))"} />
+        ))}
     </svg>
   );
 }
