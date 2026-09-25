@@ -12,14 +12,14 @@ const COOKIES = Array.from({ length: 18 }, (_, i) => {
 });
 
 const SHAPES = ["round", "star", "square", "heart", "ring", "bone"] as const;
-const SECRET_SHAPES = ["submarine", "bottle", "orange"] as const;
+const SECRET_SHAPES = ["submarine", "bottle", "orange", "can"] as const;
 export type CookieShape = (typeof SHAPES)[number] | (typeof SECRET_SHAPES)[number];
 
 // Welche Formen im Hintergrund schweben – Geheim-Designs bekommen eigene Motive
 const FLAVOR_SHAPES: Record<string, readonly CookieShape[]> = {
   uboot: ["submarine"],
-  fanta: ["bottle", "orange"],
-  fantaexotik: ["orange", "bottle"],
+  fanta: ["bottle", "can"],
+  fantaexotik: ["can", "bottle"],
 };
 
 function Star({ cx, cy, r }: { cx: number; cy: number; r: number }) {
@@ -99,6 +99,30 @@ function Orange({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   );
 }
 
+function Can({ cx, cy, r }: { cx: number; cy: number; r: number }) {
+  // kleine Fanta-Dose: Deckel, Lasche, Label-Band, Glanzkante
+  return (
+    <g>
+      {/* Dosenkörper */}
+      <rect x={cx - r * 0.55} y={cy - r * 0.62} width={r * 1.1} height={r * 1.5} rx={r * 0.22} fill="var(--dough)" />
+      {/* Deckel-Ellipse */}
+      <ellipse cx={cx} cy={cy - r * 0.62} rx={r * 0.55} ry={r * 0.18} fill="var(--dough)" />
+      {/* Deckelrand */}
+      <ellipse cx={cx} cy={cy - r * 0.62} rx={r * 0.55} ry={r * 0.18} fill="none" stroke="var(--cookie-dot-a, var(--crumb))" strokeWidth={r * 0.06} />
+      {/* Lasche (Ringpull) */}
+      <ellipse cx={cx} cy={cy - r * 0.68} rx={r * 0.14} ry={r * 0.07} fill="none" stroke="var(--cookie-dot-b, var(--crumb))" strokeWidth={r * 0.07} />
+      {/* Label-Band mit Fanta-Schriftzugeffekt (zwei Punkte als "Wellen") */}
+      <rect x={cx - r * 0.55} y={cy - r * 0.18} width={r * 1.1} height={r * 0.62} fill="var(--cookie-dot-a, var(--crumb))" />
+      <circle cx={cx - r * 0.18} cy={cy + r * 0.13} r={r * 0.1} fill="var(--dough)" />
+      <circle cx={cx + r * 0.18} cy={cy + r * 0.13} r={r * 0.1} fill="var(--dough)" />
+      {/* Glanzkante links */}
+      <rect x={cx - r * 0.45} y={cy - r * 0.45} width={r * 0.08} height={r * 1.2} rx={r * 0.04} fill="var(--cookie-dot-b, var(--crumb))" opacity="0.5" />
+      {/* Boden-Schattenlinie */}
+      <rect x={cx - r * 0.55} y={cy + r * 0.7} width={r * 1.1} height={r * 0.16} rx={r * 0.08} fill="var(--cookie-dot-a, var(--crumb))" opacity="0.55" />
+    </g>
+  );
+}
+
 export function Cookie({ size, shape = "round" }: { size: number; shape?: CookieShape }) {
   const s = shape;
   const cx = 20;
@@ -137,6 +161,8 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
         return <Bottle cx={cx} cy={cy} r={14} />;
       case "orange":
         return <Orange cx={cx} cy={cy} r={16} />;
+      case "can":
+        return <Can cx={cx} cy={cy} r={14} />;
       default:
         return <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />;
     }
