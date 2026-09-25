@@ -61,7 +61,7 @@ export function Cookie({ size, shape }: { size: number; shape?: CookieShape }) {
         return (
           <g>
             <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />
-            <circle cx={cx} cy={cy} r="7.5" fill="var(--dough-hole, var(--bg))" />
+            <circle cx={cx} cy={cy} r="7.5" fill="var(--dough-hole, var(--color-background))" />
           </g>
         );
       case "bone":
