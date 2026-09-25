@@ -12,14 +12,14 @@ const COOKIES = Array.from({ length: 18 }, (_, i) => {
 });
 
 const SHAPES = ["round", "star", "square", "heart", "ring", "bone"] as const;
-const SECRET_SHAPES = ["submarine", "bottle", "orange"] as const;
+const SECRET_SHAPES = ["submarine", "bottle", "orange", "can"] as const;
 export type CookieShape = (typeof SHAPES)[number] | (typeof SECRET_SHAPES)[number];
 
 // Welche Formen im Hintergrund schweben – Geheim-Designs bekommen eigene Motive
 const FLAVOR_SHAPES: Record<string, readonly CookieShape[]> = {
   uboot: ["submarine"],
-  fanta: ["bottle", "orange"],
-  fantaexotik: ["orange", "bottle"],
+  fanta: ["bottle", "can"],
+  fantaexotik: ["can", "bottle"],
 };
 
 function Star({ cx, cy, r }: { cx: number; cy: number; r: number }) {
