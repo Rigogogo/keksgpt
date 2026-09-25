@@ -1,3 +1,16 @@
+const COOKIES = Array.from({ length: 18 }, (_, i) => {
+  const seed = (i * 137.508) % 100;
+  return {
+    left: (seed * 0.93 + (i % 5) * 3) % 96,
+    top: ((i * 53) % 92) + 2,
+    size: 22 + ((i * 17) % 42),
+    dur: 7 + ((i * 3) % 9),
+    delay: (i % 7) * 0.7,
+    from: -12 + ((i * 11) % 24),
+    opacity: 0.14 + ((i % 4) * 0.07),
+  };
+});
+
 const SHAPES = ["round", "star", "square", "heart", "ring", "bone"] as const;
 export type CookieShape = (typeof SHAPES)[number];
 
