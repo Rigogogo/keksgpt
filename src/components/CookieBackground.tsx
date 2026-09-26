@@ -12,7 +12,7 @@ const COOKIES = Array.from({ length: 18 }, (_, i) => {
 });
 
 const SHAPES = ["round", "star", "square", "heart", "ring", "bone"] as const;
-const SECRET_SHAPES = ["submarine", "bottle", "orange", "can"] as const;
+const SECRET_SHAPES = ["submarine", "bottle", "orange", "can", "doner", "skewer", "castle", "shield"] as const;
 export type CookieShape = (typeof SHAPES)[number] | (typeof SECRET_SHAPES)[number];
 
 // Welche Formen im Hintergrund schweben – Geheim-Designs bekommen eigene Motive
@@ -20,6 +20,8 @@ const FLAVOR_SHAPES: Record<string, readonly CookieShape[]> = {
   uboot: ["submarine"],
   fanta: ["bottle", "can"],
   fantaexotik: ["can", "bottle"],
+  doener: ["doner", "skewer"],
+  mittelalter: ["castle", "shield"],
 };
 
 function Star({ cx, cy, r }: { cx: number; cy: number; r: number }) {
@@ -123,6 +125,48 @@ function Can({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   );
 }
 
+function Doner() {
+  return (
+    <g>
+      <path d="M 4 16 Q 20 3 36 16 L 29 36 Q 20 39 11 36 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <path d="M 7 16 Q 20 9 33 16 L 30 21 Q 20 15 10 21 Z" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 10 18 Q 17 21 20 18 T 30 18" fill="none" stroke="var(--cookie-dot-b, var(--crumb))" strokeWidth="3" />
+      <path d="M 14 24 Q 20 21 26 24 M 16 29 Q 20 27 24 29" fill="none" stroke="var(--crumb)" strokeWidth="1.5" />
+    </g>
+  );
+}
+
+function Skewer() {
+  return (
+    <g>
+      <path d="M 20 3 V 38" stroke="var(--crumb)" strokeWidth="2" />
+      <path d="M 12 10 Q 20 5 28 10 L 30 24 Q 27 30 20 32 Q 13 30 10 24 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <path d="M 11 16 Q 20 20 29 16 M 11 23 Q 20 27 29 22" fill="none" stroke="var(--cookie-dot-a, var(--crumb))" strokeWidth="3" />
+      <path d="M 11 33 H 29" stroke="var(--crumb)" strokeWidth="2" />
+    </g>
+  );
+}
+
+function Castle() {
+  return (
+    <g fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" strokeLinejoin="round">
+      <path d="M 5 33 V 12 H 9 V 9 H 13 V 12 H 16 V 17 H 24 V 12 H 27 V 9 H 31 V 12 H 35 V 33 Z" />
+      <path d="M 15 33 V 27 A 5 5 0 0 1 25 27 V 33" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 8 19 H 11 M 29 19 H 32 M 19 21 H 21" stroke="var(--cookie-dot-b, var(--crumb))" />
+    </g>
+  );
+}
+
+function Shield() {
+  return (
+    <g>
+      <path d="M 20 4 L 34 9 V 20 Q 33 30 20 37 Q 7 30 6 20 V 9 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <path d="M 20 7 V 34 M 9 18 H 31" stroke="var(--cookie-dot-a, var(--crumb))" strokeWidth="3" />
+      <circle cx="20" cy="18" r="3" fill="var(--cookie-dot-b, var(--crumb))" />
+    </g>
+  );
+}
+
 export function Cookie({ size, shape = "round" }: { size: number; shape?: CookieShape }) {
   const s = shape;
   const cx = 20;
@@ -163,6 +207,14 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
         return <Orange cx={cx} cy={cy} r={16} />;
       case "can":
         return <Can cx={cx} cy={cy} r={14} />;
+      case "doner":
+        return <Doner />;
+      case "skewer":
+        return <Skewer />;
+      case "castle":
+        return <Castle />;
+      case "shield":
+        return <Shield />;
       default:
         return <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />;
     }

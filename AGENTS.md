@@ -8,3 +8,5 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+Keep secret code themes in the existing flavor registry, CSS token scopes, and background-shape map so redemption, persistence, and visuals stay aligned.

@@ -11,7 +11,9 @@ export type FlavorId =
   | "honig"
   | "fanta"
   | "fantaexotik"
-  | "uboot";
+  | "uboot"
+  | "doener"
+  | "mittelalter";
 
 export type Flavor = {
   id: FlavorId;
@@ -37,6 +39,8 @@ export const SECRET_FLAVORS: (Flavor & { code: string[] })[] = [
   { id: "fanta", name: "Fanta", emoji: "🍊", tagline: "Spritzig orange", code: ["fanta"] },
   { id: "fantaexotik", name: "Fanta Exotik", emoji: "🥭", tagline: "Tropisch, gelb-pink", code: ["fanta"] },
   { id: "uboot", name: "U-Boot", emoji: "🌊", tagline: "Tief unter Wasser", code: ["uboot", "ubot", "u-boot"] },
+  { id: "doener", name: "Döner", emoji: "🥙", tagline: "Frisch vom Spieß", code: ["döner", "doener", "doner"] },
+  { id: "mittelalter", name: "Mittelalter", emoji: "🏰", tagline: "Burgen und Ritter", code: ["mittelalter"] },
 ];
 
 export const ALL_FLAVORS: Flavor[] = [...FLAVORS, ...SECRET_FLAVORS];
