@@ -537,3 +537,31 @@ html[data-flavor="uboot"] {
   --dough-hole: oklch(0.3 0.07 235);
   --shadow-tint: oklch(0.1 0.05 235 / 0.5);
 }
+
+html[data-flavor="doener"] {
+  --background: oklch(0.96 0.025 105); --foreground: oklch(0.29 0.055 40);
+  --card: oklch(0.99 0.01 105); --card-foreground: oklch(0.29 0.055 40);
+  --popover: oklch(0.99 0.01 105); --popover-foreground: oklch(0.29 0.055 40);
+  --primary: oklch(0.48 0.16 27); --primary-foreground: oklch(0.99 0.01 105);
+  --secondary: oklch(0.91 0.06 110); --secondary-foreground: oklch(0.3 0.06 40);
+  --muted: oklch(0.93 0.035 105); --muted-foreground: oklch(0.48 0.05 40);
+  --accent: oklch(0.81 0.11 132); --accent-foreground: oklch(0.27 0.07 140);
+  --border: oklch(0.85 0.05 105); --input: oklch(0.85 0.05 105); --ring: oklch(0.48 0.16 27);
+  --crumb: oklch(0.46 0.14 30); --dough: oklch(0.79 0.09 75);
+  --cookie-dot-a: oklch(0.46 0.14 28); --cookie-dot-b: oklch(0.48 0.13 145);
+  --shadow-tint: oklch(0.45 0.1 40 / 0.3);
+}
+
+html[data-flavor="mittelalter"] {
+  --background: oklch(0.93 0.02 160); --foreground: oklch(0.24 0.055 155);
+  --card: oklch(0.98 0.015 145); --card-foreground: oklch(0.24 0.055 155);
+  --popover: oklch(0.98 0.015 145); --popover-foreground: oklch(0.24 0.055 155);
+  --primary: oklch(0.38 0.09 155); --primary-foreground: oklch(0.98 0.015 145);
+  --secondary: oklch(0.86 0.035 145); --secondary-foreground: oklch(0.26 0.055 155);
+  --muted: oklch(0.89 0.025 145); --muted-foreground: oklch(0.46 0.045 155);
+  --accent: oklch(0.82 0.1 85); --accent-foreground: oklch(0.28 0.05 55);
+  --border: oklch(0.78 0.04 145); --input: oklch(0.78 0.04 145); --ring: oklch(0.55 0.13 85);
+  --crumb: oklch(0.42 0.07 155); --dough: oklch(0.67 0.06 145);
+  --cookie-dot-a: oklch(0.45 0.13 25); --cookie-dot-b: oklch(0.76 0.13 85);
+  --shadow-tint: oklch(0.26 0.05 155 / 0.3);
+}

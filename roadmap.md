@@ -1,0 +1,3 @@
+- [x] Add Döner code, color theme, and matching background figures.
+- [x] Add Mittelalter code, color theme, and matching background figures.
+- [x] Verify both code redemptions and their themes in the preview.

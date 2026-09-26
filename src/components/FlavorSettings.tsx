@@ -2,6 +2,7 @@ import { Settings } from "lucide-react";
 import { useEffect, useState } from "react";
 import { FLAVORS, SECRET_FLAVORS, type FlavorId } from "@/lib/flavors";
 import { LANGUAGES, type LangId } from "@/lib/languages";
+import { Button } from "@/components/ui/button";
 
 export function FlavorSettings({
   flavor,
@@ -31,7 +32,7 @@ export function FlavorSettings({
 
   function redeem() {
     const c = code.trim().toLowerCase().replace(/\s/g, "");
-    const found = SECRET_FLAVORS.filter((f) => f.code.includes(c));
+    const found = c ? SECRET_FLAVORS.filter((f) => f.code.includes(c)) : [];
     if (!found.length) {
       setMsg("Ungültiger Code 🍪");
       return;
@@ -117,12 +118,12 @@ export function FlavorSettings({
                 placeholder="Geheimcode …"
                 className="min-w-0 flex-1 rounded-2xl border border-border bg-card px-3 py-2 text-sm outline-none focus:border-primary"
               />
-              <button
+              <Button
                 type="submit"
-                className="rounded-2xl bg-primary px-3 py-2 text-sm font-bold text-primary-foreground"
+                className="rounded-2xl px-3 py-2 text-sm font-bold"
               >
                 OK
-              </button>
+              </Button>
             </form>
             {msg && <p className="mt-2 text-xs text-muted-foreground">{msg}</p>}
 
