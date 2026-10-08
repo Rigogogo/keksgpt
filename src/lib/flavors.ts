@@ -13,7 +13,12 @@ export type FlavorId =
   | "fantaexotik"
   | "uboot"
   | "doener"
-  | "mittelalter";
+  | "mittelalter"
+  | "onepiece"
+  | "cola"
+  | "colavanilla"
+  | "colacherry"
+  | "minecraft";
 
 export type Flavor = {
   id: FlavorId;
@@ -41,6 +46,11 @@ export const SECRET_FLAVORS: (Flavor & { code: string[] })[] = [
   { id: "uboot", name: "U-Boot", emoji: "🌊", tagline: "Tief unter Wasser", code: ["uboot", "ubot", "u-boot"] },
   { id: "doener", name: "Döner", emoji: "🥙", tagline: "Frisch vom Spieß", code: ["döner", "doener", "doner"] },
   { id: "mittelalter", name: "Mittelalter", emoji: "🏰", tagline: "Burgen und Ritter", code: ["mittelalter"] },
+  { id: "onepiece", name: "One Piece", emoji: "🏴‍☠️", tagline: "Auf in den Grand Line", code: ["onepiece", "one piece"] },
+  { id: "cola", name: "Cola", emoji: "🥤", tagline: "Dunkel und prickelnd", code: ["cola", "coca", "coke"] },
+  { id: "colavanilla", name: "Cola Vanilla", emoji: "🍦", tagline: "Cola mit Vanille", code: ["cola", "coca", "coke"] },
+  { id: "colacherry", name: "Cola Cherry", emoji: "🍒", tagline: "Cola mit Kirsche", code: ["cola", "coca", "coke", "cherry"] },
+  { id: "minecraft", name: "Minecraft", emoji: "⛏️", tagline: "Blöcke und Creeper", code: ["minecraft", "mc"] },
 ];
 
 export const ALL_FLAVORS: Flavor[] = [...FLAVORS, ...SECRET_FLAVORS];
