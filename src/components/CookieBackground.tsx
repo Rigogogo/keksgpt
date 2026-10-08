@@ -12,7 +12,7 @@ const COOKIES = Array.from({ length: 18 }, (_, i) => {
 });
 
 const SHAPES = ["round", "star", "square", "heart", "ring", "bone"] as const;
-const SECRET_SHAPES = ["submarine", "bottle", "orange", "can", "doner", "skewer", "castle", "shield", "strawhat", "skull", "colabottle", "glass", "creeper", "pickaxe"] as const;
+const SECRET_SHAPES = ["submarine", "bottle", "orange", "can", "doner", "skewer", "castle", "shield", "strawhat", "skull", "colabottle", "glass", "creeper", "pickaxe", "burger", "fries", "arches", "locomotive", "steamcloud"] as const;
 export type CookieShape = (typeof SHAPES)[number] | (typeof SECRET_SHAPES)[number];
 
 // Welche Formen im Hintergrund schweben – Geheim-Designs bekommen eigene Motive
@@ -27,6 +27,8 @@ const FLAVOR_SHAPES: Record<string, readonly CookieShape[]> = {
   colavanilla: ["glass", "colabottle"],
   colacherry: ["glass", "colabottle"],
   minecraft: ["creeper", "pickaxe"],
+  mcdonalds: ["burger", "fries", "arches"],
+  steam: ["locomotive", "steamcloud"],
 };
 
 function Star({ cx, cy, r }: { cx: number; cy: number; r: number }) {
