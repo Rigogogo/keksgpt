@@ -381,6 +381,16 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
         return <Creeper />;
       case "pickaxe":
         return <Pickaxe />;
+      case "burger":
+        return <Burger />;
+      case "fries":
+        return <Fries />;
+      case "arches":
+        return <Arches />;
+      case "locomotive":
+        return <Locomotive />;
+      case "steamcloud":
+        return <SteamCloud />;
       default:
         return <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />;
     }
