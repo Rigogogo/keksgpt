@@ -18,7 +18,9 @@ export type FlavorId =
   | "cola"
   | "colavanilla"
   | "colacherry"
-  | "minecraft";
+  | "minecraft"
+  | "mcdonalds"
+  | "steam";
 
 export type Flavor = {
   id: FlavorId;
@@ -51,6 +53,8 @@ export const SECRET_FLAVORS: (Flavor & { code: string[] })[] = [
   { id: "colavanilla", name: "Cola Vanilla", emoji: "🍦", tagline: "Cola mit Vanille", code: ["cola", "coca", "coke"] },
   { id: "colacherry", name: "Cola Cherry", emoji: "🍒", tagline: "Cola mit Kirsche", code: ["cola", "coca", "coke", "cherry"] },
   { id: "minecraft", name: "Minecraft", emoji: "⛏️", tagline: "Blöcke und Creeper", code: ["minecraft", "mc"] },
+  { id: "mcdonalds", name: "McDonald's", emoji: "🍟", tagline: "Pommes und Burger", code: ["mcdonalds", "mcdonalds'", "mcdonalds"] },
+  { id: "steam", name: "Steam", emoji: "🚂", tagline: "Dampf und Spiele", code: ["steam", "steame"] },
 ];
 
 export const ALL_FLAVORS: Flavor[] = [...FLAVORS, ...SECRET_FLAVORS];

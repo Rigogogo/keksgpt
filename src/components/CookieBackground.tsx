@@ -12,7 +12,7 @@ const COOKIES = Array.from({ length: 18 }, (_, i) => {
 });
 
 const SHAPES = ["round", "star", "square", "heart", "ring", "bone"] as const;
-const SECRET_SHAPES = ["submarine", "bottle", "orange", "can", "doner", "skewer", "castle", "shield", "strawhat", "skull", "colabottle", "glass", "creeper", "pickaxe"] as const;
+const SECRET_SHAPES = ["submarine", "bottle", "orange", "can", "doner", "skewer", "castle", "shield", "strawhat", "skull", "colabottle", "glass", "creeper", "pickaxe", "burger", "fries", "arches", "locomotive", "steamcloud"] as const;
 export type CookieShape = (typeof SHAPES)[number] | (typeof SECRET_SHAPES)[number];
 
 // Welche Formen im Hintergrund schweben – Geheim-Designs bekommen eigene Motive
@@ -27,6 +27,8 @@ const FLAVOR_SHAPES: Record<string, readonly CookieShape[]> = {
   colavanilla: ["glass", "colabottle"],
   colacherry: ["glass", "colabottle"],
   minecraft: ["creeper", "pickaxe"],
+  mcdonalds: ["burger", "fries", "arches"],
+  steam: ["locomotive", "steamcloud"],
 };
 
 function Star({ cx, cy, r }: { cx: number; cy: number; r: number }) {
@@ -251,6 +253,74 @@ function Pickaxe() {
   );
 }
 
+function Burger() {
+  // Burger von der Seite: Brötchen oben mit Sesam, Welle, Patty, Brötchen unten
+  return (
+    <g>
+      <path d="M 6 21 Q 6 8 20 8 Q 34 8 34 21 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <ellipse cx="15" cy="13" rx="1.6" ry="1" transform="rotate(-15 15 13)" fill="var(--cookie-dot-b, var(--crumb))" />
+      <ellipse cx="21" cy="12" rx="1.6" ry="1" transform="rotate(10 21 12)" fill="var(--cookie-dot-b, var(--crumb))" />
+      <ellipse cx="26" cy="15" rx="1.6" ry="1" transform="rotate(-10 26 15)" fill="var(--cookie-dot-b, var(--crumb))" />
+      <path d="M 6.5 22.5 L 12 24.5 L 16 22.5 L 20 24.5 L 24 22.5 L 28 24.5 L 33.5 22.5" fill="none" stroke="var(--cookie-dot-a, var(--crumb))" strokeWidth="2.4" strokeLinecap="round" />
+      <rect x="7" y="26" width="26" height="5" rx="2.5" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 6 31 L 34 31 Q 34 35.5 28 35.5 L 12 35.5 Q 6 35.5 6 31 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+    </g>
+  );
+}
+
+function Fries() {
+  // Pommes: roter Karton mit gelben Stäbchen
+  return (
+    <g>
+      <rect x="11" y="9" width="4.2" height="14" rx="1" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1" />
+      <rect x="17.9" y="7" width="4.2" height="16" rx="1" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1" />
+      <rect x="24.8" y="9" width="4.2" height="14" rx="1" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1" />
+      <path d="M 8.5 17 L 31.5 17 L 28.8 35 L 11.2 35 Z" fill="var(--cookie-dot-a, var(--crumb))" stroke="var(--crumb)" strokeWidth="1.2" />
+      <path d="M 15.5 32 L 15.5 23.5 L 20 28.5 L 24.5 23.5 L 24.5 32" fill="none" stroke="var(--dough)" strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" />
+    </g>
+  );
+}
+
+function Arches() {
+  // Goldene Bögen (M) als Doppelschwung
+  const d = "M 8 32 C 8 12 16 10 20 20 C 24 10 32 12 32 32";
+  return (
+    <g>
+      <path d={d} fill="none" stroke="var(--crumb)" strokeWidth="9.5" strokeLinecap="round" />
+      <path d={d} fill="none" stroke="var(--dough)" strokeWidth="7" strokeLinecap="round" />
+    </g>
+  );
+}
+
+function Locomotive() {
+  // Dampflokomotive von der Seite: Kessel, Führerstand, Schornstein, Räder
+  return (
+    <g>
+      <rect x="6" y="16" width="18" height="10" rx="4.5" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.2" />
+      <path d="M 24 26 L 24 10 L 34 10 L 34 26 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.2" />
+      <rect x="27" y="13" width="4.5" height="4.5" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 10 16 L 10 12.5 L 14 12.5 L 14 16 Z" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 9 12.5 L 15 12.5 L 13.5 10 L 10.5 10 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1" />
+      <circle cx="12" cy="28" r="4" fill="var(--cookie-dot-b, var(--crumb))" stroke="var(--crumb)" strokeWidth="1.2" />
+      <circle cx="21" cy="28" r="4" fill="var(--cookie-dot-b, var(--crumb))" stroke="var(--crumb)" strokeWidth="1.2" />
+      <circle cx="30.5" cy="28" r="3.4" fill="var(--cookie-dot-b, var(--crumb))" stroke="var(--crumb)" strokeWidth="1.2" />
+      <rect x="5" y="25.5" width="30" height="2.5" rx="1.2" fill="var(--cookie-dot-a, var(--crumb))" />
+      <circle cx="17" cy="6.5" r="2.6" fill="var(--dough)" opacity="0.75" />
+    </g>
+  );
+}
+
+function SteamCloud() {
+  // Dampfcloud mit weichen Bögen
+  return (
+    <g>
+      <path d="M 8 28 A 6 6 0 0 1 9 16 A 8 8 0 0 1 24 12 A 7 7 0 0 1 33 20 A 5 5 0 0 1 31 28 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <circle cx="16" cy="21" r="1.6" fill="var(--cookie-dot-a, var(--crumb))" opacity="0.45" />
+      <circle cx="25" cy="20" r="1.3" fill="var(--cookie-dot-a, var(--crumb))" opacity="0.45" />
+    </g>
+  );
+}
+
 export function Cookie({ size, shape = "round" }: { size: number; shape?: CookieShape }) {
   const s = shape;
   const cx = 20;
@@ -311,6 +381,16 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
         return <Creeper />;
       case "pickaxe":
         return <Pickaxe />;
+      case "burger":
+        return <Burger />;
+      case "fries":
+        return <Fries />;
+      case "arches":
+        return <Arches />;
+      case "locomotive":
+        return <Locomotive />;
+      case "steamcloud":
+        return <SteamCloud />;
       default:
         return <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />;
     }

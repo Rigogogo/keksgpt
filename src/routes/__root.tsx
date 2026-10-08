@@ -7,7 +7,7 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, lazy, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -34,7 +34,8 @@ function NotFoundComponent() {
   );
 }
 
-function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
+function ErrorComponentInner({ error: rawError, reset }: { error: unknown; reset: () => void }) {
+  const error = rawError instanceof Error ? rawError : new Error(String(rawError));
   console.error(error);
   const router = useRouter();
   useEffect(() => {
@@ -71,6 +72,8 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
     </div>
   );
 }
+
+const ErrorComponent = lazy(async () => ({ default: ErrorComponentInner }));
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   head: () => ({
