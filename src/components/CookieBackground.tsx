@@ -12,7 +12,7 @@ const COOKIES = Array.from({ length: 18 }, (_, i) => {
 });
 
 const SHAPES = ["round", "star", "square", "heart", "ring", "bone"] as const;
-const SECRET_SHAPES = ["submarine", "bottle", "orange", "can", "doner", "skewer", "castle", "shield"] as const;
+const SECRET_SHAPES = ["submarine", "bottle", "orange", "can", "doner", "skewer", "castle", "shield", "strawhat", "skull", "colabottle", "glass", "creeper", "pickaxe"] as const;
 export type CookieShape = (typeof SHAPES)[number] | (typeof SECRET_SHAPES)[number];
 
 // Welche Formen im Hintergrund schweben – Geheim-Designs bekommen eigene Motive
@@ -22,6 +22,11 @@ const FLAVOR_SHAPES: Record<string, readonly CookieShape[]> = {
   fantaexotik: ["can", "bottle"],
   doener: ["doner", "skewer"],
   mittelalter: ["castle", "shield"],
+  onepiece: ["strawhat", "skull"],
+  cola: ["colabottle", "glass"],
+  colavanilla: ["glass", "colabottle"],
+  colacherry: ["glass", "colabottle"],
+  minecraft: ["creeper", "pickaxe"],
 };
 
 function Star({ cx, cy, r }: { cx: number; cy: number; r: number }) {
@@ -167,6 +172,85 @@ function Shield() {
   );
 }
 
+function StrawHat() {
+  // Strohhut: runde Krempe, gewölbte Krone, rotes Band
+  return (
+    <g>
+      <ellipse cx="20" cy="24" rx="16" ry="5.5" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <path d="M 9 23 Q 9 8 20 8 Q 31 8 31 23 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <path d="M 9.5 20 Q 20 24.5 30.5 20 L 30.5 23.5 Q 20 28 9.5 23.5 Z" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 14 10 Q 13 15 13.5 19 M 26 10 Q 27 15 26.5 19" fill="none" stroke="var(--cookie-dot-b, var(--crumb))" strokeWidth="1.2" />
+    </g>
+  );
+}
+
+function Skull() {
+  // kleiner Totenkopf (Piratenflagge) mit gekreuzten Knochen
+  return (
+    <g>
+      <path d="M 8 30 L 14 33 M 32 30 L 26 33 M 8 34 L 32 30 M 8 30 L 32 34" stroke="var(--crumb)" strokeWidth="2" strokeLinecap="round" />
+      <path d="M 20 5 Q 30 5 30 15 Q 30 21 26 23 L 26 27 L 14 27 L 14 23 Q 10 21 10 15 Q 10 5 20 5 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <circle cx="15.5" cy="14" r="2.6" fill="var(--cookie-dot-a, var(--crumb))" />
+      <circle cx="24.5" cy="14" r="2.6" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 20 17 L 18.5 21 L 21.5 21 Z" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 16 27 V 24.5 M 20 27 V 24.5 M 24 27 V 24.5" stroke="var(--crumb)" strokeWidth="1.2" />
+    </g>
+  );
+}
+
+function ColaBottle() {
+  // Cola-Glasflasche mit Wellen-Silhouette und Label
+  return (
+    <g>
+      <rect x="17.5" y="3" width="5" height="3" rx="1" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path
+        d="M 17 6 L 17 10 Q 14 12 14 16 Q 14 19 16 21 Q 14.5 24 14.5 28 Q 14.5 34 20 34 Q 25.5 34 25.5 28 Q 25.5 24 24 21 Q 26 19 26 16 Q 26 12 23 10 L 23 6 Z"
+        fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5"
+      />
+      <rect x="14.8" y="16" width="10.4" height="5.5" fill="var(--cookie-dot-a, var(--crumb))" />
+      <path d="M 15.5 18.7 Q 20 16.5 24.5 18.7" fill="none" stroke="var(--dough)" strokeWidth="1.3" />
+    </g>
+  );
+}
+
+function Glass() {
+  // Glas mit Cola, Eiswürfeln und Strohhalm
+  return (
+    <g>
+      <path d="M 11 8 L 13.5 33 Q 13.7 35 16 35 L 24 35 Q 26.3 35 26.5 33 L 29 8 Z" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <path d="M 12.2 14 L 27.8 14 L 26.2 33.4 L 13.8 33.4 Z" fill="var(--cookie-dot-a, var(--crumb))" />
+      <rect x="16" y="17" width="4.5" height="4.5" rx="0.8" transform="rotate(12 18.2 19.2)" fill="var(--dough)" opacity="0.85" />
+      <rect x="21" y="23" width="4.5" height="4.5" rx="0.8" transform="rotate(-15 23.2 25.2)" fill="var(--dough)" opacity="0.85" />
+      <path d="M 24 4 L 21.5 14" stroke="var(--cookie-dot-b, var(--crumb))" strokeWidth="2.2" strokeLinecap="round" />
+    </g>
+  );
+}
+
+function Creeper() {
+  // Creeper-Gesicht: grüner Block mit Pixel-Gesicht
+  return (
+    <g>
+      <rect x="8" y="8" width="24" height="24" rx="2" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.5" />
+      <rect x="12" y="13" width="5" height="5" fill="var(--cookie-dot-a, var(--crumb))" />
+      <rect x="23" y="13" width="5" height="5" fill="var(--cookie-dot-a, var(--crumb))" />
+      <rect x="17.5" y="18" width="5" height="4" fill="var(--cookie-dot-a, var(--crumb))" />
+      <rect x="14.5" y="22" width="3" height="6" fill="var(--cookie-dot-a, var(--crumb))" />
+      <rect x="22.5" y="22" width="3" height="6" fill="var(--cookie-dot-a, var(--crumb))" />
+      <rect x="17.5" y="22" width="5" height="3" fill="var(--cookie-dot-a, var(--crumb))" />
+    </g>
+  );
+}
+
+function Pickaxe() {
+  // Spitzhacke im Pixel-Look
+  return (
+    <g>
+      <path d="M 6 14 Q 20 4 34 14 L 31 18 Q 20 10 9 18 Z" fill="var(--cookie-dot-a, var(--crumb))" stroke="var(--crumb)" strokeWidth="1.2" />
+      <rect x="18" y="12" width="4" height="22" rx="1" fill="var(--dough)" stroke="var(--crumb)" strokeWidth="1.2" />
+    </g>
+  );
+}
+
 export function Cookie({ size, shape = "round" }: { size: number; shape?: CookieShape }) {
   const s = shape;
   const cx = 20;
@@ -215,6 +299,18 @@ export function Cookie({ size, shape = "round" }: { size: number; shape?: Cookie
         return <Castle />;
       case "shield":
         return <Shield />;
+      case "strawhat":
+        return <StrawHat />;
+      case "skull":
+        return <Skull />;
+      case "colabottle":
+        return <ColaBottle />;
+      case "glass":
+        return <Glass />;
+      case "creeper":
+        return <Creeper />;
+      case "pickaxe":
+        return <Pickaxe />;
       default:
         return <circle cx={cx} cy={cy} r="18" fill="var(--dough)" />;
     }
