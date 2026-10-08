@@ -1,3 +1,5 @@
-- [x] Add Döner code, color theme, and matching background figures.
-- [x] Add Mittelalter code, color theme, and matching background figures.
-- [x] Verify both code redemptions and their themes in the preview.
+# Roadmap
+
+- [x] Geheime Codes: Fanta/Fanta Exotik, U-Boot, Döner, Mittelalter
+- [x] Neue Codes: One Piece, Cola (+Vanilla, +Cherry), Minecraft
+- [ ] Visuelle Verifikation der neuen Designs in der Vorschau
