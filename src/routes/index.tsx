@@ -77,6 +77,12 @@ function Index() {
     const savedLang = localStorage.getItem("keks-lang") as LangId | null;
     if (savedLang) setLang(savedLang);
     setChats(loadChats());
+    if (!localStorage.getItem("keks-visited")) {
+      localStorage.setItem("keks-visited", "1");
+      import("@/integrations/supabase/client").then(({ supabase }) =>
+        supabase.rpc("register_visit"),
+      );
+    }
   }, []);
 
   useEffect(() => {

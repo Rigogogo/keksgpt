@@ -23,6 +23,7 @@ export function FlavorSettings({
   const [code, setCode] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [unlocked, setUnlocked] = useState<FlavorId[]>([]);
+  const [visits, setVisits] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -30,8 +31,18 @@ export function FlavorSettings({
     } catch {}
   }, []);
 
-  function redeem() {
+  async function redeem() {
     const c = code.trim().toLowerCase().replace(/\s/g, "");
+    if (c === "141") {
+      setCode("");
+      setMsg(null);
+      setOpen(false);
+      setVisits("…");
+      const { supabase } = await import("@/integrations/supabase/client");
+      const { data } = await supabase.rpc("get_visits", { _code: c });
+      setVisits(data != null ? String(data) : "Fehler");
+      return;
+    }
     const found = c ? SECRET_FLAVORS.filter((f) => f.code.includes(c)) : [];
     if (!found.length) {
       setMsg("Ungültiger Code 🍪");
@@ -49,6 +60,19 @@ export function FlavorSettings({
 
   return (
     <div className="relative">
+      {visits !== null && (
+        <div className="fixed left-1/2 top-24 z-50 w-64 -translate-x-1/2 rounded-3xl border border-border bg-popover p-5 text-center text-popover-foreground crumb-shadow">
+          <button
+            onClick={() => setVisits(null)}
+            aria-label="Schließen"
+            className="absolute right-3 top-2 text-lg font-bold text-muted-foreground hover:text-foreground"
+          >
+            ×
+          </button>
+          <p className="text-xs text-muted-foreground">Besucher insgesamt</p>
+          <p className="font-display text-4xl font-extrabold">{visits}</p>
+        </div>
+      )}
       <button
         onClick={() => setOpen((o) => !o)}
         aria-label="Einstellungen"
